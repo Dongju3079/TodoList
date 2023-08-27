@@ -9,15 +9,17 @@ import UIKit
 
 class CompletionViewController: UIViewController {
 
+    let memoTable = UITableView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
+        view.addSubview(memoTable)
+        view.backgroundColor = MyColor.backColor
         setupNaviBar()
 
     }
     
     func setupNaviBar() {
-        // (네비게이션바 설정관련) iOS버전 업데이트 되면서 바뀐 설정⭐️⭐️⭐️
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()  // 불투명으로
         appearance.backgroundColor = .white

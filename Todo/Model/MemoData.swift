@@ -3,12 +3,11 @@ import Foundation
 
 
 struct MemoData:Codable {
-    var name: String
-    var age: Int
-    
-    init(name: String, age: Int) {
-        self.name = name
-        self.age = age
-    }
+    var memoText: String?
+    var category: String?
+    var time: Data?
 }
 
+struct MemoSection:Codable {
+    var category: String?
+}
