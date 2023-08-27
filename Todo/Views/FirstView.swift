@@ -68,7 +68,7 @@ class FirstView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .yellow
+        self.backgroundColor = MyColor.backColor
         self.addSubview(mainImage)
         self.addSubview(sv)
         self.addSubview(RefreshButton)

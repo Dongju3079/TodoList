@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5298C6DD2A9B659800B83EA1 /* CategoryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5298C6DC2A9B659800B83EA1 /* CategoryCollectionView.swift */; };
+		5298C6DF2A9B7E0500B83EA1 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5298C6DE2A9B7E0500B83EA1 /* TableViewCell.swift */; };
 		52C385072A98832500DD3220 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C385062A98832500DD3220 /* AppDelegate.swift */; };
 		52C385092A98832500DD3220 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C385082A98832500DD3220 /* SceneDelegate.swift */; };
-		52C3850B2A98832500DD3220 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C3850A2A98832500DD3220 /* ViewController.swift */; };
+		52C3850B2A98832500DD3220 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C3850A2A98832500DD3220 /* MainViewController.swift */; };
 		52C3850E2A98832500DD3220 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52C3850C2A98832500DD3220 /* Main.storyboard */; };
 		52C385102A98832600DD3220 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52C3850F2A98832600DD3220 /* Assets.xcassets */; };
 		52C385132A98832600DD3220 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52C385112A98832600DD3220 /* LaunchScreen.storyboard */; };
@@ -20,13 +22,20 @@
 		52F65D612A99C947006D099B /* CompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F65D602A99C947006D099B /* CompletionViewController.swift */; };
 		52F65D632A99CC2D006D099B /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F65D622A99CC2D006D099B /* MemoView.swift */; };
 		52F65D652A99CC3B006D099B /* CompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F65D642A99CC3B006D099B /* CompletionView.swift */; };
+		52F65D672A99E585006D099B /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F65D662A99E585006D099B /* Helper.swift */; };
+		52F65D6B2A9A01D6006D099B /* ModalMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F65D6A2A9A01D6006D099B /* ModalMemoViewController.swift */; };
+		52F65D6D2A9A0F88006D099B /* ModalMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F65D6C2A9A0F88006D099B /* ModalMemoView.swift */; };
+		52F65D6F2A9A2E32006D099B /* Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F65D6E2A9A2E32006D099B /* Extention.swift */; };
+		52F65D712A9A31BF006D099B /* CategoryCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F65D702A9A31BF006D099B /* CategoryCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5298C6DC2A9B659800B83EA1 /* CategoryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionView.swift; sourceTree = "<group>"; };
+		5298C6DE2A9B7E0500B83EA1 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		52C385032A98832500DD3220 /* Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52C385062A98832500DD3220 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52C385082A98832500DD3220 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		52C3850A2A98832500DD3220 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		52C3850A2A98832500DD3220 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		52C3850D2A98832500DD3220 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		52C3850F2A98832600DD3220 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52C385122A98832600DD3220 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -38,6 +47,11 @@
 		52F65D602A99C947006D099B /* CompletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionViewController.swift; sourceTree = "<group>"; };
 		52F65D622A99CC2D006D099B /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
 		52F65D642A99CC3B006D099B /* CompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionView.swift; sourceTree = "<group>"; };
+		52F65D662A99E585006D099B /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		52F65D6A2A9A01D6006D099B /* ModalMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalMemoViewController.swift; sourceTree = "<group>"; };
+		52F65D6C2A9A0F88006D099B /* ModalMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalMemoView.swift; sourceTree = "<group>"; };
+		52F65D6E2A9A2E32006D099B /* Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
+		52F65D702A9A31BF006D099B /* CategoryCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +103,10 @@
 				52C3851E2A988CC200DD3220 /* FirstView.swift */,
 				52F65D622A99CC2D006D099B /* MemoView.swift */,
 				52F65D642A99CC3B006D099B /* CompletionView.swift */,
+				52F65D6C2A9A0F88006D099B /* ModalMemoView.swift */,
+				5298C6DC2A9B659800B83EA1 /* CategoryCollectionView.swift */,
+				52F65D702A9A31BF006D099B /* CategoryCellView.swift */,
+				5298C6DE2A9B7E0500B83EA1 /* TableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -96,9 +114,10 @@
 		52C3851D2A988C9D00DD3220 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				52C3850A2A98832500DD3220 /* ViewController.swift */,
+				52C3850A2A98832500DD3220 /* MainViewController.swift */,
 				52F65D5E2A99C908006D099B /* MemoListViewController.swift */,
 				52F65D602A99C947006D099B /* CompletionViewController.swift */,
+				52F65D6A2A9A01D6006D099B /* ModalMemoViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -108,6 +127,8 @@
 			children = (
 				52C385212A988EE800DD3220 /* UserDatas.swift */,
 				52C385232A98CCF900DD3220 /* MemoData.swift */,
+				52F65D662A99E585006D099B /* Helper.swift */,
+				52F65D6E2A9A2E32006D099B /* Extention.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -183,15 +204,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52F65D672A99E585006D099B /* Helper.swift in Sources */,
 				52F65D652A99CC3B006D099B /* CompletionView.swift in Sources */,
-				52C3850B2A98832500DD3220 /* ViewController.swift in Sources */,
+				52C3850B2A98832500DD3220 /* MainViewController.swift in Sources */,
 				52F65D632A99CC2D006D099B /* MemoView.swift in Sources */,
 				52C3851F2A988CC200DD3220 /* FirstView.swift in Sources */,
 				52F65D612A99C947006D099B /* CompletionViewController.swift in Sources */,
+				52F65D6F2A9A2E32006D099B /* Extention.swift in Sources */,
 				52C385072A98832500DD3220 /* AppDelegate.swift in Sources */,
+				52F65D712A9A31BF006D099B /* CategoryCellView.swift in Sources */,
+				52F65D6D2A9A0F88006D099B /* ModalMemoView.swift in Sources */,
 				52C385222A988EE800DD3220 /* UserDatas.swift in Sources */,
 				52C385092A98832500DD3220 /* SceneDelegate.swift in Sources */,
+				5298C6DD2A9B659800B83EA1 /* CategoryCollectionView.swift in Sources */,
 				52F65D5F2A99C908006D099B /* MemoListViewController.swift in Sources */,
+				5298C6DF2A9B7E0500B83EA1 /* TableViewCell.swift in Sources */,
+				52F65D6B2A9A01D6006D099B /* ModalMemoViewController.swift in Sources */,
 				52C385242A98CCF900DD3220 /* MemoData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,6 +367,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LNXWGGBBH6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Todo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -351,7 +380,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.todo.Todo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.todo.Todo.test3079;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -369,6 +398,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LNXWGGBBH6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Todo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -381,7 +411,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.todo.Todo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.todo.Todo.test3079;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 
 class ViewController: UIViewController {
     
@@ -9,13 +10,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view = firstView
+        view.backgroundColor = MyColor.backColor
         setupNaviBar()
         setupTarget()
     }
     
     // MARK: - Navigation 설정
     func setupNaviBar() {
-        // (네비게이션바 설정관련) iOS버전 업데이트 되면서 바뀐 설정⭐️⭐️⭐️
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()  // 불투명으로
         appearance.backgroundColor = .white
@@ -45,18 +46,5 @@ class ViewController: UIViewController {
             navigationController?.pushViewController(completionView, animated: true)
         }
     }
-//
-//
-//
-//    func setupLabel() {
-//        if myArray.count != 0 {
-//            firstView.name.text = myArray[0].name
-//            firstView.age.text = myArray[1].name
-//        }
-//    }
-    
-    
-    
-    
 }
 
