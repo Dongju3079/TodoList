@@ -1,6 +1,8 @@
 import UIKit
 class ModalMemoVC: UIViewController {
     
+    var selectedIndexPath: IndexPath?
+    
     weak var delegate: MemoDelegate?
     
     let memoManager = MemoUserDatas.shared
@@ -107,9 +109,16 @@ class ModalMemoVC: UIViewController {
                     }
                 }
                 
-                self.memoManager.categoryList.insert(txt.text!, at: 0)
+                self.memoManager.categoryList.append(txt.text!)
                 self.memoCategory.categoryCollection.reloadData()
                 self.memoManager.saveCategory()
+                
+                // 🐝 추가된 항목이 들어간 셀의 IndexPath를 계산(배열.count는 1부터 시작, IndexPath의 순서는 0부터 시작)
+                let lastItemIndexPath = IndexPath(item: self.memoManager.categoryList.count-1, section: 0)
+                
+                // 🐝 .scrollToItem 를 통해서 내가 원하는 셀로 이동할 수 있음
+                self.memoCategory.categoryCollection.scrollToItem(at: lastItemIndexPath, at: .left, animated: true)
+                
                 
             } else {
                 let errorAlert = UIAlertController(title: "입력된 카테고리가 없습니다.", message: "1글자 이상 입력해주세요.", preferredStyle: .alert)
@@ -142,14 +151,46 @@ extension ModalMemoVC: UICollectionViewDataSource {
         
         cell.categoryText = memoManager.categoryList[indexPath.item]
         
+        
         return cell
     }
+    
     
 }
 
 extension ModalMemoVC: UICollectionViewDelegate {
     
+    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    //        selectedCategory = memoManager.categoryList[indexPath.item]
+    //        var some = collectionView.visibleCells
+    //        some.forEach { $0.contentView.layer.borderColor = UIColor.black.cgColor }
+    ////        some.map { $0.contentView.layer.borderColor = UIColor.black.cgColor }
+    //
+    //        let test = collectionView.cellForItem(at: indexPath) as! CategoryCellView
+    //        test.contentView.layer.borderColor = UIColor.red.cgColor
+    //    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedCategory = memoManager.categoryList[indexPath.item]
+        
+        // 선택한 셀의 IndexPath를 업데이트
+        selectedIndexPath = indexPath
+        
+        collectionView.reloadData() // reloadData로 모든 셀의 레이어 색 초기화
+        collectionView.collectionViewLayout.invalidateLayout() // 레이아웃 갱신
     }
+    
+    // 셀이 컬렉션 뷰에 나타나기 전에 실행되는 함수
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let categoryCell = cell as? CategoryCellView {
+            if indexPath == selectedIndexPath {
+                // 선택한 셀에 대한 작업 수행
+                categoryCell.contentView.layer.borderColor = UIColor.red.cgColor
+            } else {
+                // 나머지 셀에 대한 작업 수행
+                categoryCell.contentView.layer.borderColor = UIColor.black.cgColor
+            }
+        }
+    }
+    
 }
