@@ -10,13 +10,15 @@ import UIKit
 class CompletionViewController: UIViewController {
 
     let memoTable = UITableView()
+    let testtt = TableViewHeaderView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(memoTable)
         view.backgroundColor = MyColor.backColor
+        view = testtt
         setupNaviBar()
-
+        
     }
     
     func setupNaviBar() {

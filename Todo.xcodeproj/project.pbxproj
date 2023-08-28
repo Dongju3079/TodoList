@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		521AE3462A9C83AD0098BDF9 /* TableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521AE3452A9C83AD0098BDF9 /* TableViewHeaderView.swift */; };
 		5298C6DD2A9B659800B83EA1 /* CategoryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5298C6DC2A9B659800B83EA1 /* CategoryCollectionView.swift */; };
 		5298C6DF2A9B7E0500B83EA1 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5298C6DE2A9B7E0500B83EA1 /* TableViewCell.swift */; };
 		52C385072A98832500DD3220 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C385062A98832500DD3220 /* AppDelegate.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		521AE3452A9C83AD0098BDF9 /* TableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeaderView.swift; sourceTree = "<group>"; };
 		5298C6DC2A9B659800B83EA1 /* CategoryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionView.swift; sourceTree = "<group>"; };
 		5298C6DE2A9B7E0500B83EA1 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		52C385032A98832500DD3220 /* Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,12 +103,13 @@
 			isa = PBXGroup;
 			children = (
 				52C3851E2A988CC200DD3220 /* FirstView.swift */,
-				52F65D622A99CC2D006D099B /* MemoView.swift */,
 				52F65D642A99CC3B006D099B /* CompletionView.swift */,
 				52F65D6C2A9A0F88006D099B /* ModalMemoView.swift */,
 				5298C6DC2A9B659800B83EA1 /* CategoryCollectionView.swift */,
 				52F65D702A9A31BF006D099B /* CategoryCellView.swift */,
+				52F65D622A99CC2D006D099B /* MemoView.swift */,
 				5298C6DE2A9B7E0500B83EA1 /* TableViewCell.swift */,
+				521AE3452A9C83AD0098BDF9 /* TableViewHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				52C385222A988EE800DD3220 /* UserDatas.swift in Sources */,
 				52C385092A98832500DD3220 /* SceneDelegate.swift in Sources */,
 				5298C6DD2A9B659800B83EA1 /* CategoryCollectionView.swift in Sources */,
+				521AE3462A9C83AD0098BDF9 /* TableViewHeaderView.swift in Sources */,
 				52F65D5F2A99C908006D099B /* MemoListViewController.swift in Sources */,
 				5298C6DF2A9B7E0500B83EA1 /* TableViewCell.swift in Sources */,
 				52F65D6B2A9A01D6006D099B /* ModalMemoViewController.swift in Sources */,
@@ -374,7 +378,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -405,7 +409,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
