@@ -80,16 +80,12 @@ class MemoListViewController: UIViewController {
             memoList.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             memoList.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             memoList.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            memoList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 20)
+            memoList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
 }
 extension MemoListViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "t"
-    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return memoManger.categoryList.count
@@ -107,50 +103,58 @@ extension MemoListViewController: UITableViewDataSource {
         let categorySection = memoManger.categoryList[indexPath.section]
         let categoryMemo = memoManger.saveMemoList.filter { $0.category == categorySection }
         
-        
         cell.myMemo = categoryMemo[indexPath.row].memoText
         
-        print("section: \(indexPath.section) | row: \(indexPath.row)")
-        print("\(categoryMemo.count)")
-
-        if indexPath.row == 0 { // 섹션의 첫 번째 셀에 레이어 처리 적용
-            cell.clipsToBounds = true
-            cell.layer.cornerRadius = 20
-            cell.layer.maskedCorners = [ .layerMaxXMinYCorner, .layerMinXMinYCorner ]
-        } else if indexPath.row == categoryMemo.count-1 {
-            cell.clipsToBounds = true
-            cell.layer.cornerRadius = 20
-            cell.layer.maskedCorners = [ .layerMaxXMaxYCorner, .layerMinXMaxYCorner ]
-        } else {
-//            cell.clipsToBounds = false
-        }
+        let isOnlyCellInSection = categoryMemo.count == 1
         
+        cell.configureRoundCorners(
+            isOnlyCellInSection: isOnlyCellInSection,
+            isFirstInSection: indexPath.row == 0,
+            isLastInSection: indexPath.row == categoryMemo.count - 1)
         
         return cell
     }
-    
-    
 }
+
 extension MemoListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionView = TableViewHeaderView()
-        sectionView.sectionCategory = memoManger.categoryList[section]
-        
+        let categorySection = memoManger.categoryList[section]
+        let categoryMemo = memoManger.saveMemoList.filter { $0.category == categorySection }
+        if categoryMemo.isEmpty != true {
+            sectionView.sectionCategory = categorySection
+        }
         return sectionView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30 // 헤더 뷰의 높이 설정
+        let categorySection = memoManger.categoryList[section]
+        let categoryMemo = memoManger.saveMemoList.filter { $0.category == categorySection }
+        if categoryMemo.isEmpty != true {
+            return 30
+        } else { return 0 }
+    }
+    
+    
+    
+    // 테이블뷰 셀의 높이를 유동적으로 조절하고 싶다면 구현할 수 있는 메서드
+    // (musicTableView.rowHeight = 120 대신에 사용가능)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 }
 
 
 extension MemoListViewController: MemoDelegate {
-    func tableViewUpdate() {
+
+    func tableViewUpdate(section: Int) {
         memoManger.readMemoData()
-        DispatchQueue.main.async { [weak self] in
-            self?.memoList.memoTable.reloadData()
-        }
+        memoList.memoTable.reloadData()
         
+        // 🐝 추가된 항목이 들어간 셀의 IndexPath를 계산(배열.count는 1부터 시작, IndexPath의 순서는 0부터 시작)
+        let addMemoIndexPath = IndexPath(item: 0, section: section)
+        
+        // 🐝 .scrollToItem 를 통해서 내가 원하는 셀로 이동할 수 있음
+        self.memoList.memoTable.scrollToRow(at: addMemoIndexPath, at: .middle, animated: true)
     }
 }
