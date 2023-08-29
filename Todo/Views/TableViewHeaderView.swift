@@ -33,7 +33,6 @@ class TableViewHeaderView: UIView {
         l.translatesAutoresizingMaskIntoConstraints = false
         l.backgroundColor = .clear
         l.textAlignment = .center
-        l.text = "테스트"
         return l
     }()
     

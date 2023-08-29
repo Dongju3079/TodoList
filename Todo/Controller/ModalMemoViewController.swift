@@ -54,7 +54,9 @@ class ModalMemoVC: UIViewController {
         let memo = MemoData(memoText: memoTextView.memoText.text, category: selectedCategory)
         memoManager.saveMemoList.append(memo)
         memoManager.saveMemoData()
-        delegate?.tableViewUpdate()
+        // 🐝 로직 수정 필요‼️‼️
+        let locationSection = memoManager.categoryList.firstIndex(of: memo.category!)!
+        delegate?.tableViewUpdate(section: locationSection)
         dismiss(animated: true)
     }
     

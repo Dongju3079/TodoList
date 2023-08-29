@@ -11,7 +11,6 @@ class MemoUserDatas {
     
     private init() {}
     
-    
     // MARK: - SETUP DATA
     
     func saveMemoData() {

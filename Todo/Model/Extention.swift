@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MemoDelegate: AnyObject {
-    func tableViewUpdate()
+    func tableViewUpdate(section: Int)
 }
 
 // UITextView를 커스텀해서 커서의 크기를 조정

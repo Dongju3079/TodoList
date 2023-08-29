@@ -9,6 +9,8 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
     
+    var isFirstCellInSection = false
+    
     var myMemo: String? {
         didSet {
             myText.text = myMemo
@@ -43,31 +45,40 @@ class TableViewCell: UITableViewCell {
         ])
     }
     
-    
-}
-
-extension CALayer {
-    func addBorder(_ arr_edge: [UIRectEdge], color: UIColor, width: CGFloat) {
-        for edge in arr_edge {
-            let border = CALayer()
-            switch edge {
-            case UIRectEdge.top:
-                border.frame = CGRect.init(x: 0, y: 0, width: frame.width, height: width)
-                break
-            case UIRectEdge.bottom:
-                border.frame = CGRect.init(x: 0, y: frame.height - width, width: frame.width, height: width)
-                break
-            case UIRectEdge.left:
-                border.frame = CGRect.init(x: 0, y: 0, width: width, height: frame.height)
-                break
-            case UIRectEdge.right:
-                border.frame = CGRect.init(x: frame.width - width, y: 0, width: width, height: frame.height)
-                break
-            default:
-                break
-            }
-            border.backgroundColor = color.cgColor;
-            self.addSublayer(border)
+    func configureRoundCorners(isOnlyCellInSection: Bool, isFirstInSection: Bool, isLastInSection: Bool) {
+        // isOnlyCellInSection : 셀이 한개인 경우
+        // isFirstInSection : 셀이 한개가 아닌 상태에서 첫번째 셀인 경우
+        // isLastInSection : 셀이 한개가 아닌 상태에서 마지막 셀인 경우
+        // else : 그 이외엔 모두 라운드처리(X)
+        // 재사용셀 : else인 상태로 돌린다
+        /* 문제, 헤맸던 부분 : 재사용셀의 self.layer.maskedCorners = [] 부분에서
+             layer.maskedCorners는 빈 배열이 되는데 다시 채워주지 않고 Radius만 줬음 */
+        if isOnlyCellInSection {
+            self.clipsToBounds = true
+            self.layer.cornerRadius = 18
+            self.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMinYCorner, .layerMinXMaxYCorner]
+        } else if isFirstInSection {
+            self.clipsToBounds = true
+            self.layer.cornerRadius = 20
+            self.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        } else if isLastInSection {
+            self.clipsToBounds = true
+            self.layer.cornerRadius = 20
+            self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        } else {
+            self.clipsToBounds = false
+            self.layer.cornerRadius = 0
+            self.layer.maskedCorners = []
         }
     }
+    
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        print("재사용")
+        self.clipsToBounds = false
+        self.layer.cornerRadius = 0
+        self.layer.maskedCorners = []
+    }
 }
+

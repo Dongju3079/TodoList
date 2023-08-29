@@ -10,11 +10,10 @@ import UIKit
 class MemoTableView: UIView {
     
     let memoTable: UITableView = {
-        let t = UITableView()
+        // style을 .grouped로 설정하지 않으면 헤더뷰가 따라오게 된다. (참고 : https://gyuios.tistory.com/159)
+        let t = UITableView(frame: .zero, style: .grouped)
         t.translatesAutoresizingMaskIntoConstraints = false
         t.backgroundColor = .clear
-        t.clipsToBounds = true
-        t.layer.cornerRadius = 10
         return t
     }()
     
