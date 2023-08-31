@@ -11,6 +11,15 @@ class MemoListViewController: UIViewController {
     
     let memoManger = MemoUserDatas.shared
     
+    var searchResult: [MemoData] = []
+    
+    var isEditMode: Bool {
+        let searchController = navigationItem.searchController
+        let isActive = searchController?.isActive ?? false
+        let isSearchBarHasText = searchController?.searchBar.text?.isEmpty == false
+        return isActive && isSearchBarHasText
+    }
+    
     let memoList: MemoTableView = {
         let t = MemoTableView()
         t.translatesAutoresizingMaskIntoConstraints = false
@@ -102,7 +111,8 @@ extension MemoListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let categorySection = memoManger.categoryList[section]
-        let categoryMemo = memoManger.saveMemoList.filter { $0.category == categorySection }
+        let categoryMemo = isEditMode ?
+        searchResult.filter { $0.category == categorySection } : memoManger.saveMemoList.filter { $0.category == categorySection }
         return categoryMemo.count // 1번째 섹션 갯수(4), 2번째 섹션 갯수(1), 3번째 섹션 갯수(1)
     }
     
@@ -111,7 +121,8 @@ extension MemoListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
         
         let categorySection = memoManger.categoryList[indexPath.section]
-        let categoryMemo = memoManger.saveMemoList.filter { $0.category == categorySection }
+        let categoryMemo = isEditMode ?
+        searchResult.filter { $0.category == categorySection } : memoManger.saveMemoList.filter { $0.category == categorySection }
         
         cell.myMemo = categoryMemo[indexPath.row]
         
@@ -130,7 +141,8 @@ extension MemoListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionView = TableViewHeaderView()
         let categorySection = memoManger.categoryList[section]
-        let categoryMemo = memoManger.saveMemoList.filter { $0.category == categorySection }
+        let categoryMemo = isEditMode ?
+        searchResult.filter { $0.category == categorySection } : memoManger.saveMemoList.filter { $0.category == categorySection }
         if categoryMemo.isEmpty != true {
             sectionView.sectionCategory = categorySection
             print("헤더뷰추가")
@@ -141,7 +153,8 @@ extension MemoListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let categorySection = memoManger.categoryList[section]
-        let categoryMemo = memoManger.saveMemoList.filter { $0.category == categorySection }
+        let categoryMemo = isEditMode ?
+        searchResult.filter { $0.category == categorySection } : memoManger.saveMemoList.filter { $0.category == categorySection }
         if categoryMemo.isEmpty != true {
             return 50
         } else { return 0 }
@@ -154,7 +167,8 @@ extension MemoListViewController: UITableViewDelegate {
     // 셀 구분선 추가하기
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let categorySection = memoManger.categoryList[indexPath.section]
-        let categoryMemo = memoManger.saveMemoList.filter { $0.category == categorySection }
+        let categoryMemo = isEditMode ?
+        searchResult.filter { $0.category == categorySection } : memoManger.saveMemoList.filter { $0.category == categorySection }
         if let myCell = cell as? TableViewCell {
             if indexPath.row == categoryMemo.count - 1 {
                 myCell.separatorView.isHidden = true
@@ -167,11 +181,11 @@ extension MemoListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let addMemoViewController = StopWatchViewController()
         
-        let category = memoManger.categoryList[indexPath.section]
-        let memos = memoManger.saveMemoList.filter { $0.category == category }
+        let categorySection = memoManger.categoryList[indexPath.section]
+        let memos = isEditMode ?
+        searchResult.filter { $0.category == categorySection } : memoManger.saveMemoList.filter { $0.category == categorySection }
         let selectedMemo = memos[indexPath.row]
-        guard let memo = memoManger.saveMemoList.firstIndex(where: {$0 == selectedMemo}) else { return }
-        
+        guard let memo = memoManger.saveMemoList.firstIndex(of: selectedMemo) else { return }
         
         addMemoViewController.delegate = self
         addMemoViewController.memo = selectedMemo
@@ -191,14 +205,22 @@ extension MemoListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let completionAction = UIContextualAction(style: .normal, title: "Finish") { (action, view, completionHandler) in
-            let category = self.memoManger.categoryList[indexPath.section]
-            let memos = self.memoManger.saveMemoList.filter { $0.category == category }
+        let completionAction = UIContextualAction(style: .normal, title: "Finish") { [weak self] (action, view, completionHandler) in
+            guard let weakself = self else { return }
+            let categorySection = weakself.memoManger.categoryList[indexPath.section]
+            let memos = weakself.isEditMode ?
+            weakself.searchResult.filter { $0.category == categorySection } : weakself.memoManger.saveMemoList.filter { $0.category == categorySection }
             let selectedMemo = memos[indexPath.row]
-            guard let memo = self.memoManger.saveMemoList.firstIndex(where: {$0 == selectedMemo}) else { return }
-            
-            self.memoManger.completeData(memo: selectedMemo, index: memo)
-            self.memoList.memoTable.reloadData()
+            if weakself.isEditMode {
+                guard let resultMemo = weakself.searchResult.firstIndex(of: selectedMemo) else { return }
+                weakself.searchResult.remove(at: resultMemo)
+            }
+                
+            guard let memo = weakself.memoManger.saveMemoList.firstIndex(of: selectedMemo) else { return }
+            weakself.memoManger.completeData(memo: selectedMemo, index: memo)
+            weakself.memoList.memoTable.reloadData()
+            print("\(weakself.searchResult)")
+
             completionHandler(true)
         }
         
@@ -245,13 +267,17 @@ extension MemoListViewController: MemoDelegate {
 
 extension MemoListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        
+       
+        guard let resultText = searchController.searchBar.text else { return }
+        searchResult = memoManger.saveMemoList.filter{ $0.memoText?.contains(resultText) ?? false}
+        memoList.memoTable.reloadData()
+
     }
 }
 
 extension MemoListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        //        self.view.endEditing(true)
+        self.view.endEditing(true)
     }
 }
 
