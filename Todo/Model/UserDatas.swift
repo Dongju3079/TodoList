@@ -48,6 +48,16 @@ class MemoUserDatas {
         saveCompleteMemoData()
     }
     
+    func deleteData(memo: MemoData, index: Int) {
+        self.saveMemoList.remove(at: index)
+        saveMemoData()
+    }
+    
+    func deleteCompleteData(memo: MemoData, index: Int) {
+        self.completeList.remove(at: index)
+        saveCompleteMemoData()
+    }
+    
     func saveCompleteMemoData() {
         if let data = try? JSONEncoder().encode(completeList) {
             UserDefaults.standard.set(data, forKey: "completeMemoList")
@@ -71,7 +81,4 @@ class MemoUserDatas {
         categoryList = categorys
     }
     
-    func recoveryData() {
-        
-    }
 }
