@@ -13,7 +13,10 @@ struct MyColor {
 
 struct MyCategorie {
     static var cellColumns: CGFloat = 3
-    static var spacingWitdh: CGFloat = 3
+    static var spacingWidth: CGFloat = 3
     
-    static var cellWidth: CGFloat = 0
+    static var cellHeight: CGFloat = 44
+    static var cellViewHighHeight: CGFloat = (cellHeight + spacingWidth) * cellColumns - spacingWidth
+    static var cellViewMiddelHeight: CGFloat = (cellHeight + spacingWidth) * (cellColumns-1) - spacingWidth
+    static var cellViewLowHeight: CGFloat = cellHeight
 }

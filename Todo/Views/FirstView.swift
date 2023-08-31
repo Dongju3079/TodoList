@@ -12,7 +12,7 @@ class FirstView: UIView {
     let mainImage: UIView = {
         let image = UIView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.backgroundColor = .black
+        image.backgroundColor = .gray
         image.clipsToBounds = true
         image.layer.cornerRadius = 20
         
@@ -22,7 +22,7 @@ class FirstView: UIView {
     let todoButton: UIButton = {
         let bt = UIButton()
         bt.translatesAutoresizingMaskIntoConstraints = false
-        bt.backgroundColor = .clear
+        bt.backgroundColor = .darkGray
 
         bt.setTitleColor(.black, for: .normal)
         
@@ -37,7 +37,7 @@ class FirstView: UIView {
     let completionButton: UIButton = {
         let bt = UIButton()
         bt.translatesAutoresizingMaskIntoConstraints = false
-        bt.backgroundColor = .clear
+        bt.backgroundColor = .darkGray
 
         bt.setTitleColor(.black, for: .normal)
         
@@ -68,7 +68,7 @@ class FirstView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = MyColor.backColor
+        self.backgroundColor = .clear
         self.addSubview(mainImage)
         self.addSubview(sv)
         self.addSubview(RefreshButton)

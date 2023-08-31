@@ -8,9 +8,9 @@
 import UIKit
 
 class CompletionViewController: UIViewController {
-
+    
     let memoTable = UITableView()
-    let testtt = TableViewHeaderView()
+    let testtt = ModalMemooView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,19 +22,36 @@ class CompletionViewController: UIViewController {
     }
     
     func setupNaviBar() {
+        title = "김밥"
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()  // 불투명으로
         appearance.backgroundColor = .white
-        navigationController?.navigationBar.tintColor = .systemBlue
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.orange]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.orange]
+        appearance.backgroundColor = .blue
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
-        // 🐝 네비게이션 표시하지 않기
-        navigationController?.isNavigationBarHidden = false
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "검색"
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.largeTitleDisplayMode = .always
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.tintColor = .red
+        navigationController?.navigationBar.barTintColor = .green
+        
+
+        
+        // 추가버튼 생성하기
+
+        navigationItem.searchController = searchController
+        
     }
     
-
-
-
+    
+    
+    
 }
