@@ -45,9 +45,6 @@ class MemoListViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        memoManger.readMemoData()
-        memoList.memoTable.reloadData()
-        
         navigationController?.isNavigationBarHidden = false
         
     }
@@ -84,8 +81,6 @@ class MemoListViewController: UIViewController {
          */
         memoList.memoTable.sectionHeaderTopPadding = 0 //상단 여백 해결
         memoList.memoTable.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
-        memoManger.readCategory()
-        memoManger.readMemoData()
     }
     
     func autoLayout() {
@@ -129,8 +124,6 @@ extension MemoListViewController: UITableViewDataSource {
             isLastInSection: indexPath.row == categoryMemo.count - 1)
         return cell
     }
-    
-    
 }
 
 extension MemoListViewController: UITableViewDelegate {
@@ -173,7 +166,6 @@ extension MemoListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let addMemoViewController = StopWatchViewController()
-        //        addMemoViewController.delegate = self
         
         let category = memoManger.categoryList[indexPath.section]
         let memos = memoManger.saveMemoList.filter { $0.category == category }
@@ -196,6 +188,40 @@ extension MemoListViewController: UITableViewDelegate {
         }
         
         present(addMemoViewController, animated: true, completion: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let completionAction = UIContextualAction(style: .normal, title: "Finish") { (action, view, completionHandler) in
+            let category = self.memoManger.categoryList[indexPath.section]
+            let memos = self.memoManger.saveMemoList.filter { $0.category == category }
+            let selectedMemo = memos[indexPath.row]
+            guard let memo = self.memoManger.saveMemoList.firstIndex(where: {$0 == selectedMemo}) else { return }
+            
+            self.memoManger.completeData(memo: selectedMemo, index: memo)
+            self.memoList.memoTable.reloadData()
+            completionHandler(true)
+        }
+        
+//        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { (action, view, completionHandler) in
+//            self.memoManager.deleteToDo(data: self.memoManager.getToDoListFromCoreData()[indexPath.row]) {
+//                print("삭제됏음")
+//                print(self.completionManager.getToDoListFromCoreData().first?.text ?? "업데이트 안됨")
+//                self.memoTableView.reloadData()
+//
+//            }
+//              completionHandler(true)
+//          }
+//        let myColor = self.memoManager.getToDoListFromCoreData()[indexPath.row].color
+        
+//        completionAction.backgroundColor = MyColor(rawValue: myColor)?.backgoundColor
+        completionAction.image = UIImage(systemName: "checkmark.circle")
+        
+//        deleteAction.backgroundColor = MyColor(rawValue: myColor)?.buttonColor
+//        deleteAction.image = UIImage(systemName: "trash.circle")
+        
+        let configuration = UISwipeActionsConfiguration(actions: [completionAction]) //, deleteAction])
+        configuration.performsFirstActionWithFullSwipe = true
+        return configuration
     }
 }
 

@@ -43,6 +43,7 @@ class MemoUserDatas {
     
     func completeData(memo: MemoData, index: Int) {
         self.saveMemoList.remove(at: index)
+        saveMemoData()
         self.completeList.insert(memo, at: 0)
         saveCompleteMemoData()
     }
@@ -56,7 +57,7 @@ class MemoUserDatas {
     func readCompleteMemoData() {
         if let data = UserDefaults.standard.data(forKey: "completeMemoList") {
             if let readData = try? JSONDecoder().decode([MemoData].self, from: data) {
-                saveMemoList = readData
+                completeList = readData
             }
         }
     }
