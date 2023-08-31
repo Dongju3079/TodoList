@@ -1,18 +1,10 @@
-//
-//  ModalMemoView.swift
-//  Todo
-//
-//  Created by Macbook on 2023/08/26.
-//
-
 import UIKit
 
-class ModalMemooView: UIView {
-    
+class ModalMemoView: UIView {
     
     var cellOfNumber: Int? {
         didSet {
-//            categoryCollectionHeight()
+            categoryCollectionHeight()
         }
     }
     
@@ -120,28 +112,25 @@ class ModalMemooView: UIView {
     let okAtion: UIButton = {
         let b = UIButton()
         b.translatesAutoresizingMaskIntoConstraints = false
-        b.setTitle("확인", for: .normal)
-        b.setTitleColor(.white, for: .normal)
-        b.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        b.setTitle("CHECK", for: .normal)
+        b.setTitleColor(.orange, for: .normal)
+        b.titleLabel?.font = .boldSystemFont(ofSize: 25)
         b.backgroundColor = .clear
         b.clipsToBounds = true
         b.layer.cornerRadius = 10
-        b.layer.borderWidth = 2
-        b.layer.borderColor = UIColor.black.cgColor
         return b
     }()
     
     let cancleAtion: UIButton = {
         let b = UIButton()
         b.translatesAutoresizingMaskIntoConstraints = false
-        b.setTitle("취소", for: .normal)
-        b.setTitleColor(.white, for: .normal)
-        b.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        b.setTitle("CANCLE", for: .normal)
+        b.setTitleColor(.orange, for: .normal)
+        b.titleLabel?.font = .boldSystemFont(ofSize: 25)
         b.backgroundColor = .clear
         b.clipsToBounds = true
         b.layer.cornerRadius = 10
-        b.layer.borderWidth = 2
-        b.layer.borderColor = UIColor.black.cgColor
+
         return b
     }()
     
@@ -176,50 +165,46 @@ class ModalMemooView: UIView {
             CategoryTitleView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             CategoryTitleView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 50),
             CategoryTitleView.heightAnchor.constraint(equalToConstant: 20),
-            
+
             CategoryTitleLabel.leadingAnchor.constraint(equalTo: CategoryTitleView.leadingAnchor),
             CategoryTitleLabel.trailingAnchor.constraint(equalTo: CategoryTitleView.trailingAnchor),
             CategoryTitleLabel.centerYAnchor.constraint(equalTo: CategoryTitleView.centerYAnchor),
             
-//            categoryCollection.centerYAnchor.constraint(equalTo: centerYAnchor),
             categoryCollection.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             categoryCollection.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             categoryCollection.topAnchor.constraint(equalTo: CategoryTitleView.bottomAnchor, constant: 10),
+//            categoryCollection.heightAnchor.constraint(equalToConstant: 91),
             categoryHeight,
             
-            todoTitleView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            todoTitleView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            todoTitleView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            todoTitleView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             todoTitleView.topAnchor.constraint(equalTo: categoryCollection.bottomAnchor, constant: 25),
             todoTitleView.heightAnchor.constraint(equalToConstant: 20),
-            
+
             todoTitleLabel.leadingAnchor.constraint(equalTo: todoTitleView.leadingAnchor),
             todoTitleLabel.trailingAnchor.constraint(equalTo: todoTitleView.trailingAnchor),
             todoTitleLabel.centerYAnchor.constraint(equalTo: todoTitleView.centerYAnchor),
-            
-            memoView.topAnchor.constraint(equalTo: todoTitleView.bottomAnchor, constant: 10),
-            memoView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            memoView.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+            memoView.topAnchor.constraint(equalTo: todoTitleLabel.bottomAnchor, constant: 10),
+            memoView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            memoView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             memoView.heightAnchor.constraint(equalToConstant: 40),
-            
-            
+
             memoText.leadingAnchor.constraint(equalTo: memoView.leadingAnchor, constant: 5),
             memoText.trailingAnchor.constraint(equalTo: memoView.trailingAnchor, constant: -5),
             memoText.topAnchor.constraint(equalTo: memoView.topAnchor, constant: 5),
             memoText.bottomAnchor.constraint(equalTo: memoView.bottomAnchor, constant: -5),
-            
-            buttonSV.leadingAnchor.constraint(equalTo: leadingAnchor),
-            buttonSV.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+            buttonSV.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            buttonSV.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             buttonSV.topAnchor.constraint(equalTo: memoView.bottomAnchor, constant: 25),
             buttonSV.heightAnchor.constraint(equalToConstant: 40),
-            
-            
+
             okAtion.trailingAnchor.constraint(equalTo: buttonSV.trailingAnchor),
             okAtion.centerYAnchor.constraint(equalTo: buttonSV.centerYAnchor),
-            
+
             cancleAtion.leadingAnchor.constraint(equalTo: buttonSV.leadingAnchor),
             cancleAtion.centerYAnchor.constraint(equalTo: buttonSV.centerYAnchor),
-            okAtion.widthAnchor.constraint(equalToConstant: 40),
-            cancleAtion.widthAnchor.constraint(equalToConstant: 40)
         ])
     }
     
@@ -235,6 +220,6 @@ class ModalMemooView: UIView {
         }
         
         // 🐝 컬렉션뷰의 크기를 즉시 변경하게 해주는 코드
-        categoryCollection.layoutIfNeeded()
+        layoutIfNeeded()
     }
 }

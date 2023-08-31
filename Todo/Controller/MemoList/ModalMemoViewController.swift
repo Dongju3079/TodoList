@@ -27,7 +27,7 @@ class ModalMemoVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(memoTextView)
-        view.backgroundColor = .darkGray
+        view.backgroundColor = UIColor(red: 0.06, green: 0.06, blue: 0.06, alpha: 1.00)
         SetupCollection()
         setupNaviBar()
         setupDatas()
@@ -55,14 +55,22 @@ class ModalMemoVC: UIViewController {
     }
     
     @objc func plusButtonTapped() {
-        print("test")
+        self.memoTextView.memoText.resignFirstResponder()
         if selectedCategory != nil && memoTextView.memoText.text != "" {
-            let memo = MemoData(memoText: memoTextView.memoText.text, category: selectedCategory)
+            let memo = MemoData(memoText: memoTextView.memoText.text, category: selectedCategory, date: Date())
             memoManager.saveMemoList.append(memo)
             memoManager.saveMemoData()
-
+            
+            // 카테고리에 해당하는 함수 필터링
+            let memos = memoManager.saveMemoList.filter { $0.category == selectedCategory }
+            // 카테고리가 몇번째인지 알려주는
             let locationSection = memoManager.categoryList.firstIndex(of: memo.category!)!
-            delegate?.tableViewUpdate(section: locationSection)
+            if let locationItem = memos.firstIndex(where: {$0 == memo}) {
+                delegate?.tableViewUpdate(section: locationSection, item: locationItem)
+            } else {
+                print("tt")
+            }
+
             dismiss(animated: true)
         } else {
             let errorAlert = UIAlertController(title: "카테고리 또는 메모를 \n 입력해주세요.", message: nil, preferredStyle: .alert)
