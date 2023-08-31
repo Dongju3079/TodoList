@@ -20,31 +20,41 @@ class MemoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(memoList)
-        view.backgroundColor = MyColor.backColor
         setupNaviBar()
         autoLayout()
         setupMemoTable()
     }
     
-    
     // MARK: - Navigation
     
     func setupNaviBar() {
-        title = "To Do List"
+        title = "ToDo List"
+        
+        // (네비게이션바 설정관련) iOS버전 업데이트 되면서 바뀐 설정⭐️⭐️⭐️
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()  // 불투명으로
-        appearance.backgroundColor = .white
-        navigationController?.navigationBar.tintColor = .systemBlue
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        appearance.backgroundColor = .black // bartintcolor가 15버전부터 appearance로 설정하게끔 바뀜
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.orange]
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.orange]
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.tintColor = .orange
+        self.navigationController?.navigationBar.standardAppearance = appearance
+        self.navigationController?.navigationBar.compactAppearance = appearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
-        // 추가버튼 생성하기
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "검색"
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        let addButtonTwo = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(backButtonTapped))
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(plusButtonTapped))
         navigationItem.rightBarButtonItem = addButton
+        navigationItem.searchController = searchController
         
-        // 🐝 네비게이션 표시하지 않기
-        navigationController?.isNavigationBarHidden = false
+        navigationItem.leftBarButtonItem = addButtonTwo
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,11 +62,25 @@ class MemoListViewController: UIViewController {
         memoList.memoTable.reloadData()
     }
     
+    @objc func backButtonTapped() {
+        self.navigationController?.popViewController(animated: false)
+    }
+    
     @objc func plusButtonTapped() {
         let addMemoViewController = ModalMemoVC()
-        let navigationController = UINavigationController(rootViewController: addMemoViewController)
         addMemoViewController.delegate = self
-        present(navigationController, animated: true, completion: nil)
+        addMemoViewController.modalPresentationStyle = .pageSheet
+        
+        if let sheet = addMemoViewController.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.delegate = self
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            
+            sheet.prefersGrabberVisible = true
+        }
+        
+        present(addMemoViewController, animated: true, completion: nil)
     }
     
     // 테이블 뷰 셋팅
@@ -77,43 +101,47 @@ class MemoListViewController: UIViewController {
     
     func autoLayout() {
         NSLayoutConstraint.activate([
-            memoList.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            memoList.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            memoList.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            memoList.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            memoList.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            memoList.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             memoList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
 }
+
 extension MemoListViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return memoManger.categoryList.count
+        return memoManger.categoryList.count // 3개의 섹션
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let categorySection = memoManger.categoryList[section]
         let categoryMemo = memoManger.saveMemoList.filter { $0.category == categorySection }
-        return categoryMemo.count
+        return categoryMemo.count // 1번째 섹션 갯수(4), 2번째 섹션 갯수(1), 3번째 섹션 갯수(1)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // 1번째 섹션( 1, 2, 3, 4)
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
         
         let categorySection = memoManger.categoryList[indexPath.section]
         let categoryMemo = memoManger.saveMemoList.filter { $0.category == categorySection }
         
         cell.myMemo = categoryMemo[indexPath.row].memoText
-        
+
+        cell.isLastCellInSection = indexPath.row != categoryMemo.count - 1
         let isOnlyCellInSection = categoryMemo.count == 1
-        
+
         cell.configureRoundCorners(
             isOnlyCellInSection: isOnlyCellInSection,
             isFirstInSection: indexPath.row == 0,
             isLastInSection: indexPath.row == categoryMemo.count - 1)
-        
         return cell
     }
+    
+    
 }
 
 extension MemoListViewController: UITableViewDelegate {
@@ -123,30 +151,41 @@ extension MemoListViewController: UITableViewDelegate {
         let categoryMemo = memoManger.saveMemoList.filter { $0.category == categorySection }
         if categoryMemo.isEmpty != true {
             sectionView.sectionCategory = categorySection
-        }
-        return sectionView
+            print("헤더뷰추가")
+            return sectionView
+            
+        } else { return nil }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let categorySection = memoManger.categoryList[section]
         let categoryMemo = memoManger.saveMemoList.filter { $0.category == categorySection }
         if categoryMemo.isEmpty != true {
-            return 30
+            return 50
         } else { return 0 }
     }
     
-    
-    
-    // 테이블뷰 셀의 높이를 유동적으로 조절하고 싶다면 구현할 수 있는 메서드
-    // (musicTableView.rowHeight = 120 대신에 사용가능)
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 70
+    }
+    
+    // 셀 구분선 추가하기
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let categorySection = memoManger.categoryList[indexPath.section]
+        let categoryMemo = memoManger.saveMemoList.filter { $0.category == categorySection }
+        if let myCell = cell as? TableViewCell {
+            if indexPath.row == categoryMemo.count - 1 {
+                myCell.separatorView.isHidden = true
+            } else {
+                myCell.separatorView.isHidden = false
+            }
+        }
     }
 }
 
 
 extension MemoListViewController: MemoDelegate {
-
+    
     func tableViewUpdate(section: Int) {
         memoManger.readMemoData()
         memoList.memoTable.reloadData()
@@ -156,5 +195,25 @@ extension MemoListViewController: MemoDelegate {
         
         // 🐝 .scrollToItem 를 통해서 내가 원하는 셀로 이동할 수 있음
         self.memoList.memoTable.scrollToRow(at: addMemoIndexPath, at: .middle, animated: true)
+    }
+}
+
+extension MemoListViewController: UISheetPresentationControllerDelegate {
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+        //크기 변경 됐을 경우
+        print(sheetPresentationController.selectedDetentIdentifier == .large ? "large" : "medium")
+    }
+}
+
+extension MemoListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        
+    }
+}
+
+extension MemoListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("1")
+        self.view.endEditing(true)
     }
 }

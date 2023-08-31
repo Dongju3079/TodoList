@@ -19,9 +19,6 @@ class TableViewHeaderView: UIView {
         let v = UIView()
         v.translatesAutoresizingMaskIntoConstraints = false
         v.backgroundColor = .clear
-        v.clipsToBounds = true
-        v.layer.cornerRadius = 5
-        v.layer.borderWidth = 2
         v.layer.borderColor = UIColor.black.cgColor
 
         v.addSubview(headerLabel)
@@ -31,8 +28,10 @@ class TableViewHeaderView: UIView {
     let headerLabel: UILabel = {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
+        l.font = .boldSystemFont(ofSize: 30)
         l.backgroundColor = .clear
         l.textAlignment = .center
+        l.textColor = .white
         return l
     }()
     
@@ -49,7 +48,7 @@ class TableViewHeaderView: UIView {
     
     func autoLayout() {
         NSLayoutConstraint.activate([
-            headerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            headerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             headerView.centerYAnchor.constraint(equalTo: centerYAnchor),
             headerView.heightAnchor.constraint(equalToConstant: 20),
             headerView.widthAnchor.constraint(greaterThanOrEqualToConstant: 25),
@@ -57,7 +56,7 @@ class TableViewHeaderView: UIView {
             headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10),
             headerLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10),
             headerLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            headerLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+
         ])
     }
     

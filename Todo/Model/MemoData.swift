@@ -8,6 +8,6 @@ struct MemoData:Codable {
     var time: Data?
 }
 
-struct MemoSection:Codable {
-    var category: String?
-}
+//struct MemoSection:Codable {
+//    var category: String?
+//}

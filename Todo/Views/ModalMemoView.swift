@@ -9,22 +9,87 @@ import UIKit
 
 class ModalMemoView: UIView {
     
-    lazy var backgroundImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "memo5")) // 원하는 배경 이미지 이름으로 수정
-        imageView.contentMode = .scaleToFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.addSubview(memoView)
+    var cellOfNumber: Int? {
+        didSet {
+            categoryCollectionHeight()
+        }
+    }
+    
+    lazy var CategoryTitleView: UIView = {
+        let v = UIView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.backgroundColor = .clear
+        v.layer.borderColor = UIColor.black.cgColor
         
-        // 🐝 UIImageView에 제스처를 추가 (UITextField를 imageview에 올리면 제스처가 중복되어 textview가 작동되지 않는 것 같음)
-        // 그래서 imageview 제스처의 동작에 UITextField 키보드 동작을 추가
-        
-        // 🐝 UIImageView 어디를 터치해도 UITextField가 활성화되는 문제발생
-        // UIImageView중 일부분의 좌표를 설정해서 해당 부분만 내가 원하는 메서드를 실행시키게 했음
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(tapGestureRecognizer)
-        return imageView
+        v.addSubview(CategoryTitleLabel)
+        return v
     }()
+    
+    let CategoryTitleLabel: UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.font = .boldSystemFont(ofSize: 30)
+        l.backgroundColor = .clear
+        l.textAlignment = .left
+        l.text = "Category"
+        l.textColor = .white
+        return l
+    }()
+    
+    let categoryCollection: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        
+        /* 🐝
+         UIApplication.shared.connectedScenes : 현재 앱이 실행 중이 모든 씬(화면)의 배열
+         windowScene.windows.first : 현재의 화면에서 첫번째 윈도우(창)
+         */
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+            return UICollectionView(frame: .zero, collectionViewLayout: flowLayout)}
+        guard let window = windowScene.windows.first else {
+            return UICollectionView(frame: .zero, collectionViewLayout: flowLayout)}
+        
+        let sheetWidth = window.safeAreaLayoutGuide.layoutFrame.width
+        var itemSize = (sheetWidth - (40 + MyCategorie.spacingWidth * (MyCategorie.cellColumns - 1))) / MyCategorie.cellColumns
+        
+        flowLayout.itemSize = CGSize(width: itemSize, height: MyCategorie.cellHeight)
+        flowLayout.minimumLineSpacing = MyCategorie.spacingWidth
+        flowLayout.minimumInteritemSpacing = MyCategorie.spacingWidth
+        flowLayout.scrollDirection = .vertical
+        
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collection.backgroundColor = .clear
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        
+        // 스크롤 바 없애기
+        collection.showsHorizontalScrollIndicator = false
+        
+        return collection
+    }()
+    
+    lazy var categoryHeight = categoryCollection.heightAnchor.constraint(greaterThanOrEqualToConstant: 44)
+    
+    
+    lazy var todoTitleView: UIView = {
+        let v = UIView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.backgroundColor = .clear
+        v.layer.borderColor = UIColor.black.cgColor
+        
+        v.addSubview(todoTitleLabel)
+        return v
+    }()
+    
+    let todoTitleLabel: UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.font = .boldSystemFont(ofSize: 30)
+        l.backgroundColor = .clear
+        l.textAlignment = .left
+        l.text = "ToDo Title"
+        l.textColor = .white
+        return l
+    }()
+    
     
     lazy var memoView: UIView = {
         let v = UIView()
@@ -44,7 +109,6 @@ class ModalMemoView: UIView {
         t.backgroundColor = .clear
         t.textColor = .black
         t.tintColor = .darkGray
-
         // 대문자 안되게끔
         t.autocapitalizationType = .none
         t.spellCheckingType = .no
@@ -52,9 +116,51 @@ class ModalMemoView: UIView {
         return t
     }()
     
+    let okAtion: UIButton = {
+        let b = UIButton()
+        b.translatesAutoresizingMaskIntoConstraints = false
+        b.setTitle("확인", for: .normal)
+        b.setTitleColor(.white, for: .normal)
+        b.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        b.backgroundColor = .clear
+        b.clipsToBounds = true
+        b.layer.cornerRadius = 10
+        b.layer.borderWidth = 2
+        b.layer.borderColor = UIColor.black.cgColor
+        return b
+    }()
+    
+    let cancleAtion: UIButton = {
+        let b = UIButton()
+        b.translatesAutoresizingMaskIntoConstraints = false
+        b.setTitle("취소", for: .normal)
+        b.setTitleColor(.white, for: .normal)
+        b.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        b.backgroundColor = .clear
+        b.clipsToBounds = true
+        b.layer.cornerRadius = 10
+        b.layer.borderWidth = 2
+        b.layer.borderColor = UIColor.black.cgColor
+        return b
+    }()
+    
+    lazy var buttonSV: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [cancleAtion, okAtion])
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.axis = .horizontal
+        sv.spacing = 20
+        sv.alignment = .fill
+        sv.distribution = .fillEqually
+        return sv
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubview(backgroundImage)
+        self.addSubview(CategoryTitleView)
+        self.addSubview(categoryCollection)
+        self.addSubview(todoTitleView)
+        self.addSubview(memoView)
+        self.addSubview(buttonSV)
         autoLayout()
     }
     
@@ -64,33 +170,66 @@ class ModalMemoView: UIView {
     
     func autoLayout() {
         NSLayoutConstraint.activate([
-            backgroundImage.leadingAnchor.constraint(equalTo: leadingAnchor),
-            backgroundImage.trailingAnchor.constraint(equalTo: trailingAnchor),
-            backgroundImage.topAnchor.constraint(equalTo: topAnchor),
-            backgroundImage.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            memoView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 50),
-            memoView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50),
-            memoView.heightAnchor.constraint(equalToConstant: 50),
-            memoView.topAnchor.constraint(equalTo: backgroundImage.topAnchor, constant: 300),
+            CategoryTitleView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            CategoryTitleView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            CategoryTitleView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 50),
+            CategoryTitleView.heightAnchor.constraint(equalToConstant: 20),
+
+            CategoryTitleLabel.leadingAnchor.constraint(equalTo: CategoryTitleView.leadingAnchor),
+            CategoryTitleLabel.trailingAnchor.constraint(equalTo: CategoryTitleView.trailingAnchor),
+            CategoryTitleLabel.centerYAnchor.constraint(equalTo: CategoryTitleView.centerYAnchor),
             
+            categoryCollection.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            categoryCollection.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            categoryCollection.topAnchor.constraint(equalTo: CategoryTitleView.bottomAnchor, constant: 10),
+//            categoryCollection.heightAnchor.constraint(equalToConstant: 91),
+            categoryHeight,
+            
+            todoTitleView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            todoTitleView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            todoTitleView.topAnchor.constraint(equalTo: categoryCollection.bottomAnchor, constant: 25),
+            todoTitleView.heightAnchor.constraint(equalToConstant: 20),
+
+            todoTitleLabel.leadingAnchor.constraint(equalTo: todoTitleView.leadingAnchor),
+            todoTitleLabel.trailingAnchor.constraint(equalTo: todoTitleView.trailingAnchor),
+            todoTitleLabel.centerYAnchor.constraint(equalTo: todoTitleView.centerYAnchor),
+
+            memoView.topAnchor.constraint(equalTo: todoTitleLabel.bottomAnchor, constant: 10),
+            memoView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            memoView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            memoView.heightAnchor.constraint(equalToConstant: 40),
+
             memoText.leadingAnchor.constraint(equalTo: memoView.leadingAnchor, constant: 5),
             memoText.trailingAnchor.constraint(equalTo: memoView.trailingAnchor, constant: -5),
             memoText.topAnchor.constraint(equalTo: memoView.topAnchor, constant: 5),
             memoText.bottomAnchor.constraint(equalTo: memoView.bottomAnchor, constant: -5),
+
+            buttonSV.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            buttonSV.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            buttonSV.topAnchor.constraint(equalTo: memoView.bottomAnchor, constant: 25),
+            buttonSV.heightAnchor.constraint(equalToConstant: 40),
+
+            okAtion.trailingAnchor.constraint(equalTo: buttonSV.trailingAnchor),
+            okAtion.centerYAnchor.constraint(equalTo: buttonSV.centerYAnchor),
+
+            cancleAtion.leadingAnchor.constraint(equalTo: buttonSV.leadingAnchor),
+            cancleAtion.centerYAnchor.constraint(equalTo: buttonSV.centerYAnchor),
         ])
     }
     
-    @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
-        let touchPoint = sender.location(in: backgroundImage)
-        if touchPointIsInsideDesiredArea(touchPoint) {
-            memoText.becomeFirstResponder()
+    func categoryCollectionHeight() {
+        guard let cellOfNumber = cellOfNumber else { return }
+        switch cellOfNumber {
+        case 7...:
+            categoryHeight.constant = MyCategorie.cellViewHighHeight
+        case 4...:
+            categoryHeight.constant = MyCategorie.cellViewMiddelHeight
+        default:
+            categoryHeight.constant = MyCategorie.cellViewLowHeight
         }
+        
+        // 🐝 컬렉션뷰의 크기를 즉시 변경하게 해주는 코드
+        layoutIfNeeded()
     }
-
-    func touchPointIsInsideDesiredArea(_ point: CGPoint) -> Bool {
-        let desiredAreaRect = CGRect(x: 100, y: 200, width: 200, height: 100)
-        return desiredAreaRect.contains(point)
-    }
-    
 }

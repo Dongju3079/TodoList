@@ -7,7 +7,7 @@ class MemoUserDatas {
     
     var saveMemoList: [MemoData] = []
     
-    var categoryList: [String] = []
+    var categoryList: [String] = ["+"]
     
     private init() {}
     
