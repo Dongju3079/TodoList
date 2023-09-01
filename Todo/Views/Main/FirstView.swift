@@ -9,26 +9,25 @@ import UIKit
 
 class FirstView: UIView {
     
-    let mainImage: UIView = {
-        let image = UIView()
+    let mainImage: UIImageView = {
+        let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.backgroundColor = .gray
+        image.backgroundColor = .white
         image.clipsToBounds = true
-        image.layer.cornerRadius = 20
-        
+        image.layer.cornerRadius = 150
         return image
     }()
     
     let todoButton: UIButton = {
         let bt = UIButton()
         bt.translatesAutoresizingMaskIntoConstraints = false
-        bt.backgroundColor = .darkGray
+        bt.backgroundColor = .clear
 
-        bt.setTitleColor(.black, for: .normal)
+        bt.setTitleColor(.white, for: .normal)
         
         // 🐝 버튼에 bold효과 주기
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 30)]
-        let attributedTitle = NSAttributedString(string: "To Do", attributes: attributes)
+        let attributedTitle = NSAttributedString(string: "ToDo List", attributes: attributes)
         bt.setAttributedTitle(attributedTitle, for: .normal)
         
         return bt
@@ -37,12 +36,12 @@ class FirstView: UIView {
     let completionButton: UIButton = {
         let bt = UIButton()
         bt.translatesAutoresizingMaskIntoConstraints = false
-        bt.backgroundColor = .darkGray
+        bt.backgroundColor = .clear
 
-        bt.setTitleColor(.black, for: .normal)
+        bt.setTitleColor(.white, for: .normal)
         
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 30)]
-        let attributedTitle = NSAttributedString(string: "Completion", attributes: attributes)
+        let attributedTitle = NSAttributedString(string: "Completion list", attributes: attributes)
         bt.setAttributedTitle(attributedTitle, for: .normal)
 
         return bt
@@ -58,20 +57,11 @@ class FirstView: UIView {
         return sv
     }()
     
-    let RefreshButton: UIButton = {
-        let bt = UIButton()
-        bt.translatesAutoresizingMaskIntoConstraints = false
-        bt.backgroundColor = .clear
-        bt.setImage(UIImage(systemName: "arrow.clockwise.heart"), for: .normal)
-        return bt
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .clear
         self.addSubview(mainImage)
         self.addSubview(sv)
-        self.addSubview(RefreshButton)
         autoLayout()
         
     }
@@ -82,19 +72,15 @@ class FirstView: UIView {
     
     func autoLayout() {
         NSLayoutConstraint.activate([
-            mainImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
-            mainImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
-            mainImage.heightAnchor.constraint(equalToConstant: 200),
+            mainImage.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            mainImage.heightAnchor.constraint(equalToConstant: 300),
+            mainImage.widthAnchor.constraint(equalToConstant: 300),
             mainImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 100),
             
-            sv.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 100),
-            sv.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -100),
+            sv.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 70),
+            sv.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -70),
             sv.heightAnchor.constraint(equalToConstant: 110),
-            sv.topAnchor.constraint(equalTo: mainImage.bottomAnchor, constant: 10),
-          
-            RefreshButton.topAnchor.constraint(equalTo: sv.bottomAnchor, constant: 50),
-            RefreshButton.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-            
+            sv.topAnchor.constraint(equalTo: mainImage.bottomAnchor, constant: 50),
         ])
     }
     

@@ -1,19 +1,20 @@
-//
-//  TableViewCell.swift
-//  Todo
-//
-//  Created by Macbook on 2023/08/27.
-//
-
 import UIKit
 
 class TableViewCell: UITableViewCell {
     
     var isLastCellInSection = false
     
-    var myMemo: String? {
+//    var myMemo: String? {
+//        didSet {
+//            myText.text = myMemo
+//        }
+//    }
+    
+    var myMemo: MemoData? {
         didSet {
-            myText.text = myMemo
+            myText.text = myMemo?.memoText
+            dateLabel.text = myMemo?.dateString
+            timeLabel.text = myMemo?.time
         }
     }
     
@@ -67,7 +68,7 @@ class TableViewCell: UITableViewCell {
         l.translatesAutoresizingMaskIntoConstraints = true
         l.backgroundColor = .clear
         l.textColor = .white
-        l.font = .boldSystemFont(ofSize: 25)
+        l.font = .boldSystemFont(ofSize: 30)
         l.text = "00:00:00"
         l.textAlignment = .right
         return l
@@ -109,7 +110,7 @@ class TableViewCell: UITableViewCell {
             myMemoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
             memoSV.leadingAnchor.constraint(equalTo: myMemoView.leadingAnchor, constant: 10),
-            memoSV.trailingAnchor.constraint(equalTo: myMemoView.trailingAnchor, constant: -10),
+            memoSV.trailingAnchor.constraint(equalTo: myMemoView.trailingAnchor, constant: -15),
             memoSV.topAnchor.constraint(equalTo: myMemoView.topAnchor, constant: 10),
             memoSV.bottomAnchor.constraint(equalTo: myMemoView.bottomAnchor, constant: -10),
             

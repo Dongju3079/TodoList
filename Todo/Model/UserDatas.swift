@@ -9,6 +9,8 @@ class MemoUserDatas {
     
     var categoryList: [String] = ["+"]
     
+    var completeList: [MemoData] = []
+    
     private init() {}
     
     // MARK: - SETUP DATA
@@ -27,6 +29,38 @@ class MemoUserDatas {
         }
     }
     
+    func updateData(number: Int?, time: String, oldMemo: MemoData?) {
+        var newMemo = MemoData()
+        guard let oldMemo = oldMemo else { return }
+        newMemo.category = oldMemo.category
+        newMemo.date = oldMemo.date
+        newMemo.memoText = oldMemo.memoText
+        newMemo.time = time
+        saveMemoList.remove(at: number!)
+        saveMemoList.insert(newMemo, at: number!)
+        self.saveMemoData()
+    }
+    
+    func completeData(memo: MemoData, index: Int) {
+        self.saveMemoList.remove(at: index)
+        self.completeList.insert(memo, at: 0)
+        saveCompleteMemoData()
+    }
+    
+    func saveCompleteMemoData() {
+        if let data = try? JSONEncoder().encode(completeList) {
+            UserDefaults.standard.set(data, forKey: "completeMemoList")
+        }
+    }
+    
+    func readCompleteMemoData() {
+        if let data = UserDefaults.standard.data(forKey: "completeMemoList") {
+            if let readData = try? JSONDecoder().decode([MemoData].self, from: data) {
+                saveMemoList = readData
+            }
+        }
+    }
+    
     func saveCategory() {
         UserDefaults.standard.set(self.categoryList, forKey: "categoryList")
     }
@@ -34,14 +68,6 @@ class MemoUserDatas {
     func readCategory() {
         guard let categorys = UserDefaults.standard.array(forKey: "categoryList") as? [String] else { return }
         categoryList = categorys
-    }
-    
-    func updateData() {
-        
-    }
-    
-    func completeData() {
-        
     }
     
     func recoveryData() {
