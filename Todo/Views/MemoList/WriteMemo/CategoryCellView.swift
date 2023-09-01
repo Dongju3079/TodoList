@@ -9,7 +9,7 @@ class CategoryCellView: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                contentView.layer.borderColor = UIColor.red.cgColor
+                contentView.layer.borderColor = UIColor.orange.cgColor
             } else {
                 contentView.layer.borderColor = UIColor.black.cgColor
             }
