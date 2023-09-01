@@ -9,7 +9,7 @@ class ViewController: UIViewController {
     
     var imageUrl: String? = "https://avatars.githubusercontent.com/u/131073398?v=4"
     
-    private let memoManager = MemoUserDatas.shared
+    let memoManager = MemoUserDatas.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,6 +17,7 @@ class ViewController: UIViewController {
         setupTarget()
         setupImage()
         setupNaviBar()
+        setupData()
     }
     
     func setupNaviBar() {
@@ -52,6 +53,12 @@ class ViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func setupData() {
+        memoManager.readCategory()
+        memoManager.readMemoData()
+        memoManager.readCompleteMemoData()
     }
     
     func setupTarget() {

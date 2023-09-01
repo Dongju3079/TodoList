@@ -34,7 +34,6 @@ class ModalMemoVC: UIViewController {
     }
     
     func setupDatas() {
-        memoManager.readCategory()
         memoTextView.cellOfNumber = memoManager.categoryList.count
     }
     
