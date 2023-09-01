@@ -215,33 +215,37 @@ extension MemoListViewController: UITableViewDelegate {
                 guard let resultMemo = weakself.searchResult.firstIndex(of: selectedMemo) else { return }
                 weakself.searchResult.remove(at: resultMemo)
             }
-                
+            
             guard let memo = weakself.memoManger.saveMemoList.firstIndex(of: selectedMemo) else { return }
             weakself.memoManger.completeData(memo: selectedMemo, index: memo)
             weakself.memoList.memoTable.reloadData()
-            print("\(weakself.searchResult)")
-
-            completionHandler(true)
+            
+            
+            
         }
         
-//        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { (action, view, completionHandler) in
-//            self.memoManager.deleteToDo(data: self.memoManager.getToDoListFromCoreData()[indexPath.row]) {
-//                print("삭제됏음")
-//                print(self.completionManager.getToDoListFromCoreData().first?.text ?? "업데이트 안됨")
-//                self.memoTableView.reloadData()
-//
-//            }
-//              completionHandler(true)
-//          }
-//        let myColor = self.memoManager.getToDoListFromCoreData()[indexPath.row].color
+        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [weak self] (action, view, completionHandler) in
+            guard let weakself = self else { return }
+            let categorySection = weakself.memoManger.categoryList[indexPath.section]
+            let memos = weakself.isEditMode ?
+            weakself.searchResult.filter { $0.category == categorySection } : weakself.memoManger.saveMemoList.filter { $0.category == categorySection }
+            let selectedMemo = memos[indexPath.row]
+            if weakself.isEditMode {
+                guard let resultMemo = weakself.searchResult.firstIndex(of: selectedMemo) else { return }
+                weakself.searchResult.remove(at: resultMemo)
+            }
+            
+            guard let memo = weakself.memoManger.saveMemoList.firstIndex(of: selectedMemo) else { return }
+            weakself.memoManger.deleteData(memo: selectedMemo, index: memo)
+            weakself.memoList.memoTable.reloadData()
+        }
         
-//        completionAction.backgroundColor = MyColor(rawValue: myColor)?.backgoundColor
+        
+        
         completionAction.image = UIImage(systemName: "checkmark.circle")
+        deleteAction.image = UIImage(systemName: "trash.circle")
         
-//        deleteAction.backgroundColor = MyColor(rawValue: myColor)?.buttonColor
-//        deleteAction.image = UIImage(systemName: "trash.circle")
-        
-        let configuration = UISwipeActionsConfiguration(actions: [completionAction]) //, deleteAction])
+        let configuration = UISwipeActionsConfiguration(actions: [completionAction, deleteAction])
         configuration.performsFirstActionWithFullSwipe = true
         return configuration
     }
@@ -267,11 +271,11 @@ extension MemoListViewController: MemoDelegate {
 
 extension MemoListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-       
+        
         guard let resultText = searchController.searchBar.text else { return }
         searchResult = memoManger.saveMemoList.filter{ $0.memoText?.contains(resultText) ?? false}
         memoList.memoTable.reloadData()
-
+        
     }
 }
 

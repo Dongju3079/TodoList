@@ -9,14 +9,24 @@ import UIKit
 
 class CompletionViewController: UIViewController {
     
+    
+    let memoManager = MemoUserDatas.shared
+    
+    var searchResult: [MemoData] = []
+    
+    var isEditMode: Bool {
+        let searchController = navigationItem.searchController
+        let isActive = searchController?.isActive ?? false
+        let isSearchBarHasText = searchController?.searchBar.text?.isEmpty == false
+        return isActive && isSearchBarHasText
+    }
+    
     let memoList: MemoTableView = {
         let t = MemoTableView()
         t.translatesAutoresizingMaskIntoConstraints = false
         return t
     }()
-    
-    let memoManager = MemoUserDatas.shared
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(memoList)
@@ -75,7 +85,8 @@ extension CompletionViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let categorySection = memoManager.categoryList[section]
-        let categoryMemo = memoManager.completeList.filter { $0.category == categorySection }
+        let categoryMemo = isEditMode ?
+        searchResult.filter { $0.category == categorySection } : memoManager.completeList.filter { $0.category == categorySection }
         return categoryMemo.count // 1번째 섹션 갯수(4), 2번째 섹션 갯수(1), 3번째 섹션 갯수(1)
     }
     
@@ -84,7 +95,8 @@ extension CompletionViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
         
         let categorySection = memoManager.categoryList[indexPath.section]
-        let categoryMemo = memoManager.completeList.filter { $0.category == categorySection }
+        let categoryMemo = isEditMode ?
+        searchResult.filter { $0.category == categorySection } : memoManager.completeList.filter { $0.category == categorySection }
         
         cell.myMemo = categoryMemo[indexPath.row]
         
@@ -103,7 +115,8 @@ extension CompletionViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionView = TableViewHeaderView()
         let categorySection = memoManager.categoryList[section]
-        let categoryMemo = memoManager.completeList.filter { $0.category == categorySection }
+        let categoryMemo = isEditMode ?
+        searchResult.filter { $0.category == categorySection } : memoManager.completeList.filter { $0.category == categorySection }
         if categoryMemo.isEmpty != true {
             sectionView.sectionCategory = categorySection
             print("헤더뷰추가")
@@ -114,7 +127,8 @@ extension CompletionViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let categorySection = memoManager.categoryList[section]
-        let categoryMemo = memoManager.completeList.filter { $0.category == categorySection }
+        let categoryMemo = isEditMode ?
+        searchResult.filter { $0.category == categorySection } : memoManager.completeList.filter { $0.category == categorySection }
         if categoryMemo.isEmpty != true {
             return 50
         } else { return 0 }
@@ -127,7 +141,8 @@ extension CompletionViewController: UITableViewDelegate {
     // 셀 구분선 추가하기
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let categorySection = memoManager.categoryList[indexPath.section]
-        let categoryMemo = memoManager.completeList.filter { $0.category == categorySection }
+        let categoryMemo = isEditMode ?
+        searchResult.filter { $0.category == categorySection } : memoManager.completeList.filter { $0.category == categorySection }
         if let myCell = cell as? TableViewCell {
             if indexPath.row == categoryMemo.count - 1 {
                 myCell.separatorView.isHidden = true
@@ -136,17 +151,47 @@ extension CompletionViewController: UITableViewDelegate {
             }
         }
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [weak self] (action, view, completionHandler) in
+            guard let weakself = self else { return }
+            let categorySection = weakself.memoManager.categoryList[indexPath.section]
+            let memos = weakself.isEditMode ?
+            weakself.searchResult.filter { $0.category == categorySection } : weakself.memoManager.completeList.filter { $0.category == categorySection }
+            let selectedMemo = memos[indexPath.row]
+            if weakself.isEditMode {
+                guard let resultMemo = weakself.searchResult.firstIndex(of: selectedMemo) else { return }
+                weakself.searchResult.remove(at: resultMemo)
+            }
+            
+            guard let memo = weakself.memoManager.completeList.firstIndex(of: selectedMemo) else { return }
+            weakself.memoManager.deleteCompleteData(memo: selectedMemo, index: memo)
+            weakself.memoList.memoTable.reloadData()
+        }
+        
+        deleteAction.image = UIImage(systemName: "trash.circle")
+        
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = true
+        return configuration
+    }
+
 }
 
 
 extension CompletionViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         
+        guard let resultText = searchController.searchBar.text else { return }
+        searchResult = memoManager.completeList.filter{ $0.memoText?.contains(resultText) ?? false}
+        memoList.memoTable.reloadData()
+        
     }
 }
 
 extension CompletionViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        //        self.view.endEditing(true)
+        self.view.endEditing(true)
     }
 }
