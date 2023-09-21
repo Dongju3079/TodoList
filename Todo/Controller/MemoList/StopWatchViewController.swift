@@ -1,10 +1,3 @@
-//
-//  StopWatchViewController.swift
-//  Todo
-//
-//  Created by Macbook on 2023/08/31.
-//
-
 import UIKit
 
 class StopWatchViewController: UIViewController {
@@ -45,10 +38,6 @@ class StopWatchViewController: UIViewController {
                   print(count)
               }
           }
-        
-        if let sheetPresentationController = self.presentationController as? UISheetPresentationController {
-            sheetPresentationController.delegate = self
-        }
         
         self.todoTimer.watchLabel.text = memo?.time
         self.timeString = memo!.time
@@ -115,16 +104,8 @@ class StopWatchViewController: UIViewController {
     }
     
     
+    
 }
 
-extension StopWatchViewController: UISheetPresentationControllerDelegate {
-    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
-        print("스톱워치 뷰컨")
-        // 시트의 상태 변화를 감지하고 원하는 동작 수행
-        self.memoManager.updateData(number: self.memoIndex, time: self.timeString, oldMemo: self.memo)
-        
-        self.delegate?.tableViewUpdate()
-    }
-}
 
 

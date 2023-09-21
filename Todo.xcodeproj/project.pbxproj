@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		521AE3462A9C83AD0098BDF9 /* TableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521AE3452A9C83AD0098BDF9 /* TableViewHeaderView.swift */; };
+		522011C52AB6F6F90023BB4D /* TodoList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 522011C32AB6F6F90023BB4D /* TodoList.xcdatamodeld */; };
+		5232CCC42ABAC2BA00222D8C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232CCC32ABAC2BA00222D8C /* ProfileViewController.swift */; };
+		5232CCC82ABAC32E00222D8C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232CCC72ABAC32E00222D8C /* ProfileView.swift */; };
+		5232CCCA2ABB1F0C00222D8C /* DefaultCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232CCC92ABB1F0C00222D8C /* DefaultCollectionViewController.swift */; };
+		5232CCCC2ABB1F1100222D8C /* VideoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232CCCB2ABB1F1100222D8C /* VideoCollectionViewController.swift */; };
+		5232CCCE2ABB1F1400222D8C /* TagCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232CCCD2ABB1F1300222D8C /* TagCollectionViewController.swift */; };
+		5232CCD02ABB25F500222D8C /* PhotoCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232CCCF2ABB25F500222D8C /* PhotoCollectionCell.swift */; };
+		5232CCDC2ABC1BB200222D8C /* ReusableInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232CCDB2ABC1BB200222D8C /* ReusableInfoLabel.swift */; };
 		527346BB2AA0F22C00AA52B6 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527346BA2AA0F22C00AA52B6 /* Networking.swift */; };
 		528D542D2AA05D210026B990 /* StopWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528D542C2AA05D210026B990 /* StopWatchViewController.swift */; };
 		528D54312AA0616D0026B990 /* StopWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528D54302AA0616D0026B990 /* StopWatchView.swift */; };
@@ -34,6 +42,14 @@
 
 /* Begin PBXFileReference section */
 		521AE3452A9C83AD0098BDF9 /* TableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeaderView.swift; sourceTree = "<group>"; };
+		522011C42AB6F6F90023BB4D /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		5232CCC32ABAC2BA00222D8C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		5232CCC72ABAC32E00222D8C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		5232CCC92ABB1F0C00222D8C /* DefaultCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCollectionViewController.swift; sourceTree = "<group>"; };
+		5232CCCB2ABB1F1100222D8C /* VideoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCollectionViewController.swift; sourceTree = "<group>"; };
+		5232CCCD2ABB1F1300222D8C /* TagCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewController.swift; sourceTree = "<group>"; };
+		5232CCCF2ABB25F500222D8C /* PhotoCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionCell.swift; sourceTree = "<group>"; };
+		5232CCDB2ABC1BB200222D8C /* ReusableInfoLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableInfoLabel.swift; sourceTree = "<group>"; };
 		527346BA2AA0F22C00AA52B6 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		528D542C2AA05D210026B990 /* StopWatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchViewController.swift; sourceTree = "<group>"; };
 		528D54302AA0616D0026B990 /* StopWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchView.swift; sourceTree = "<group>"; };
@@ -71,6 +87,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5232CCC52ABAC2BF00222D8C /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				5232CCC32ABAC2BA00222D8C /* ProfileViewController.swift */,
+				5232CCC92ABB1F0C00222D8C /* DefaultCollectionViewController.swift */,
+				5232CCCB2ABB1F1100222D8C /* VideoCollectionViewController.swift */,
+				5232CCCD2ABB1F1300222D8C /* TagCollectionViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		5232CCC62ABAC2FF00222D8C /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				5232CCC72ABAC32E00222D8C /* ProfileView.swift */,
+				5232CCDB2ABC1BB200222D8C /* ReusableInfoLabel.swift */,
+				5232CCCF2ABB25F500222D8C /* PhotoCollectionCell.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		528D54232AA05BD10026B990 /* WriteMemo */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,6 +215,7 @@
 				52C3850F2A98832600DD3220 /* Assets.xcassets */,
 				52C385112A98832600DD3220 /* LaunchScreen.storyboard */,
 				52C385142A98832600DD3220 /* Info.plist */,
+				522011C32AB6F6F90023BB4D /* TodoList.xcdatamodeld */,
 			);
 			path = Todo;
 			sourceTree = "<group>";
@@ -188,6 +226,7 @@
 				528D54252AA05BF10026B990 /* Main */,
 				528D54242AA05BE90026B990 /* MemoList */,
 				528D54262AA05C000026B990 /* Completion */,
+				5232CCC62ABAC2FF00222D8C /* Profile */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -198,6 +237,7 @@
 				528D54282AA05C740026B990 /* Main */,
 				528D54292AA05C810026B990 /* MemoList */,
 				528D542B2AA05CC70026B990 /* Completion */,
+				5232CCC52ABAC2BF00222D8C /* Profile */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -289,8 +329,10 @@
 				528D54312AA0616D0026B990 /* StopWatchView.swift in Sources */,
 				52F65D652A99CC3B006D099B /* CompletionView.swift in Sources */,
 				52C3850B2A98832500DD3220 /* MainViewController.swift in Sources */,
+				5232CCD02ABB25F500222D8C /* PhotoCollectionCell.swift in Sources */,
 				52F65D632A99CC2D006D099B /* MemoView.swift in Sources */,
 				528D542D2AA05D210026B990 /* StopWatchViewController.swift in Sources */,
+				5232CCC42ABAC2BA00222D8C /* ProfileViewController.swift in Sources */,
 				52C3851F2A988CC200DD3220 /* FirstView.swift in Sources */,
 				52F65D612A99C947006D099B /* CompletionViewController.swift in Sources */,
 				52F65D6F2A9A2E32006D099B /* Extention.swift in Sources */,
@@ -300,9 +342,15 @@
 				52F65D6D2A9A0F88006D099B /* ModalMemoView.swift in Sources */,
 				52C385222A988EE800DD3220 /* UserDatas.swift in Sources */,
 				52C385092A98832500DD3220 /* SceneDelegate.swift in Sources */,
+				5232CCCA2ABB1F0C00222D8C /* DefaultCollectionViewController.swift in Sources */,
 				521AE3462A9C83AD0098BDF9 /* TableViewHeaderView.swift in Sources */,
+				5232CCCC2ABB1F1100222D8C /* VideoCollectionViewController.swift in Sources */,
+				5232CCC82ABAC32E00222D8C /* ProfileView.swift in Sources */,
+				5232CCCE2ABB1F1400222D8C /* TagCollectionViewController.swift in Sources */,
 				52F65D5F2A99C908006D099B /* MemoListViewController.swift in Sources */,
+				522011C52AB6F6F90023BB4D /* TodoList.xcdatamodeld in Sources */,
 				5298C6DF2A9B7E0500B83EA1 /* TableViewCell.swift in Sources */,
+				5232CCDC2ABC1BB200222D8C /* ReusableInfoLabel.swift in Sources */,
 				52F65D6B2A9A01D6006D099B /* ModalMemoViewController.swift in Sources */,
 				52C385242A98CCF900DD3220 /* MemoData.swift in Sources */,
 			);
@@ -380,7 +428,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -434,7 +482,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -528,6 +576,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		522011C32AB6F6F90023BB4D /* TodoList.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				522011C42AB6F6F90023BB4D /* Model.xcdatamodel */,
+			);
+			currentVersion = 522011C42AB6F6F90023BB4D /* Model.xcdatamodel */;
+			path = TodoList.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 52C384FB2A98832500DD3220 /* Project object */;
 }
