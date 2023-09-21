@@ -16,8 +16,3 @@ struct MemoData:Codable, Equatable {
             return savedDateString
         }
 }
-
-
-//struct MemoSection:Codable {
-//    var category: String?
-//}

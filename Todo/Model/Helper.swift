@@ -1,10 +1,3 @@
-//
-//  Helper.swift
-//  Todo
-//
-//  Created by Macbook on 2023/08/26.
-//
-
 import UIKit
 
 struct MyColor {
@@ -19,4 +12,14 @@ struct MyCategorie {
     static var cellViewHighHeight: CGFloat = (cellHeight + spacingWidth) * cellColumns - spacingWidth
     static var cellViewMiddelHeight: CGFloat = (cellHeight + spacingWidth) * (cellColumns-1) - spacingWidth
     static var cellViewLowHeight: CGFloat = cellHeight
+}
+
+struct MyProfilePhoto {
+    static var cellColumns: CGFloat = 3
+    static var spacingWidth: CGFloat = 2
+    static var photoList: [String] = []
+    
+    static var photoList1: [String] = []
+    
+    static var photoList2: [String] = []
 }

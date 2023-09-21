@@ -28,7 +28,7 @@ class MemoTableView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(memoTable)
-        self.backgroundColor = .black
+        self.backgroundColor = .white
         autoLayout()
     }
     

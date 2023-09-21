@@ -46,7 +46,8 @@ class MemoListViewController: UIViewController {
         
         navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
-        
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+
         let addButtonTwo = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(backButtonTapped))
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(plusButtonTapped))
         navigationItem.rightBarButtonItem = addButton
@@ -97,7 +98,7 @@ class MemoListViewController: UIViewController {
             memoList.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             memoList.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             memoList.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            memoList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            memoList.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -134,6 +135,7 @@ extension MemoListViewController: UITableViewDataSource {
             isFirstInSection: indexPath.row == 0,
             isLastInSection: indexPath.row == categoryMemo.count - 1)
         return cell
+        
     }
 }
 

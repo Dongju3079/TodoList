@@ -19,38 +19,52 @@ class FirstView: UIView {
     }()
     
     let todoButton: UIButton = {
-        let bt = UIButton()
-        bt.translatesAutoresizingMaskIntoConstraints = false
-        bt.backgroundColor = .clear
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
 
-        bt.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         
         // 🐝 버튼에 bold효과 주기
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 30)]
         let attributedTitle = NSAttributedString(string: "ToDo List", attributes: attributes)
-        bt.setAttributedTitle(attributedTitle, for: .normal)
+        button.setAttributedTitle(attributedTitle, for: .normal)
         
-        return bt
+        return button
     }()
     
     let completionButton: UIButton = {
-        let bt = UIButton()
-        bt.translatesAutoresizingMaskIntoConstraints = false
-        bt.backgroundColor = .clear
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
 
-        bt.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 30)]
         let attributedTitle = NSAttributedString(string: "Completion list", attributes: attributes)
-        bt.setAttributedTitle(attributedTitle, for: .normal)
+        button.setAttributedTitle(attributedTitle, for: .normal)
 
-        return bt
+        return button
+    }()
+    
+    let profileButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
+
+        button.setTitleColor(.black, for: .normal)
+        
+        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 30)]
+        let attributedTitle = NSAttributedString(string: "My Profile", attributes: attributes)
+        button.setAttributedTitle(attributedTitle, for: .normal)
+
+        return button
     }()
     
     lazy var sv: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [todoButton, completionButton])
+        let sv = UIStackView(arrangedSubviews: [todoButton, completionButton, profileButton])
         sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.spacing = 10
+        sv.spacing = 20
         sv.axis = .vertical
         sv.distribution = .fillEqually
         sv.alignment = .fill
@@ -59,7 +73,7 @@ class FirstView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .clear
+        self.backgroundColor = .white
         self.addSubview(mainImage)
         self.addSubview(sv)
         autoLayout()
@@ -79,7 +93,6 @@ class FirstView: UIView {
             
             sv.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 70),
             sv.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -70),
-            sv.heightAnchor.constraint(equalToConstant: 110),
             sv.topAnchor.constraint(equalTo: mainImage.bottomAnchor, constant: 50),
         ])
     }

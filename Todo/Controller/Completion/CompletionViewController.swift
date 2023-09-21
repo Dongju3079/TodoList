@@ -72,7 +72,7 @@ class CompletionViewController: UIViewController {
             memoList.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             memoList.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             memoList.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            memoList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            memoList.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }
